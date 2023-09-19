@@ -2,6 +2,8 @@
 **/bin/
 **/obj/
 **/out/
+[b|B]in
+[O|o]bj
 
 # files
 Dockerfile*

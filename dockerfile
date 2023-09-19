@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /app
+
+# copy everything
+COPY . ./
+# restore as distinct layers
+RUN dotnet restore
+# build and publish a release
+RUN dotnet publish -c Release -o out
+
+# build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+COPY --from=build /app/out .
+ENTRYPOINT ["dotnet", "AmonyCoffeeMIS.dll"]
