@@ -1,10 +1,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
-# copy everything
-COPY . ./
-# restore as distinct layers
+# copy `csproj` and restore as distinct layers
+COPY *.csproj ./
 RUN dotnet restore
+
+# copy everything else
+COPY . ./
+
 # build and publish a release
 RUN dotnet publish -c Release -o out
 
